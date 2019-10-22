@@ -1,6 +1,7 @@
 use crate::point::Point;
 use crate::color::Color;
 use crate::sphere::Sphere;
+use crate::hittable::Hittable;
 
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Ray {
@@ -9,10 +10,12 @@ pub struct Ray {
 }
 
 impl Ray {
+    #[allow(dead_code)]
     pub fn origin(&self) -> &Point {
         &self.start
     }
 
+    #[allow(dead_code)]
     pub fn direction(&self) -> &Point {
         &self.direction
     }

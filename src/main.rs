@@ -19,6 +19,7 @@ fn add_color(s: &mut String, color: &color::Color) {
     s.push_str(&color_string);
 }
 
+#[allow(dead_code)]
 fn create_rainbow_gradient(scene: &scene::Scene, mut output: &mut String) {
     for row in 1..scene.height {
         for col in 1..scene.width {

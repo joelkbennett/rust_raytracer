@@ -20,6 +20,7 @@ impl Point {
         (self.x * other.x) + (self.y * other.y) + (self.z * other.z)
     }
 
+    #[allow(dead_code)]
     pub fn cross(&self, other: &Point) -> Point {
         Point{
             x: self.y * other.z - self.z * other.y,

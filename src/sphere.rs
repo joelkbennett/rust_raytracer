@@ -9,6 +9,7 @@ pub struct Sphere {
 }
 
 impl Hittable for Sphere {
+  /// Returns the discrimant; for testing
   fn get_discriminant(&self, ray: &Ray) -> f64 {
     let ray_center = ray.start - &self.center;
     let a = ray.direction.dot(&ray.direction);
@@ -22,8 +23,7 @@ impl Hittable for Sphere {
     let a = ray.direction.dot(&ray.direction);
     let b = ray_center.dot(&ray.direction) * 2.0;
     let c = ray_center.dot(&ray_center) - (self.radius * self.radius);
-    let discriminant = b * b - 4.0 * a * c;
-    let discriminant = self.get_discriminant(&ray);
+    let discriminant = b * b - 4.0 * a * c;  
 
     if discriminant < 0.0 {
       -1.0
