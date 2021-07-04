@@ -28,7 +28,7 @@ impl Ray {
         let hit = sphere.hit(&self);
         if hit > 0.0 {
             let normal = (self.point_at_parameter(hit) - &sphere.center).unit_vector();
-            return Color{r: (normal.x + 1.0) as u8, g: (normal.y + 1.0) as u8, b: (normal.z + 1.0) as u8 } * 0.5;
+            return Color{r: (255.9 * (normal.x + 1.0)) as u8, g: (255.99 * (normal.y + 1.0)) as u8, b: (255.99 * (normal.z + 1.0)) as u8 };
         }
 
         let unit_direction = self.direction.unit_vector();
