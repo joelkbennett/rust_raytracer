@@ -1,6 +1,7 @@
 use crate::point::Point;
 use crate::ray::Ray;
 use crate::hittable::Hittable;
+use crate::hitRecord::HitRecord;
 
 #[derive(Debug, PartialEq)]
 pub struct Sphere {
@@ -13,23 +14,38 @@ impl Hittable for Sphere {
   fn get_discriminant(&self, ray: &Ray) -> f64 {
     let ray_center = ray.start - &self.center;
     let a = ray.direction.dot(&ray.direction);
-    let b = ray_center.dot(&ray.direction) * 2.0;
+    let half_b = ray_center.dot(&ray.direction);
     let c = ray_center.dot(&ray_center) - (self.radius * self.radius);
-    b * b - 4.0 * a * c
+    half_b * half_b - a * c
   }
 
-  fn hit(&self, ray: &Ray) -> f64 {
+  fn hit(&self, ray: &Ray, t_min: f64, t_max: f64, hit_record: &HitRecord) -> bool {
     let ray_center = ray.start - &self.center;
     let a = ray.direction.dot(&ray.direction);
-    let b = ray_center.dot(&ray.direction) * 2.0;
+    let half_b = ray_center.dot(&ray.direction);
     let c = ray_center.dot(&ray_center) - (self.radius * self.radius);
-    let discriminant = b * b - 4.0 * a * c;
+    let discriminant = half_b * half_b - a * c;
 
     if discriminant < 0.0 {
-      -1.0
-    } else {
-      (-b - discriminant.sqrt()) / (2.0 * a)
+      return false;
     }
+
+    let discriminant_squared = discriminant.sqrt();
+    // the nearest root
+    let mut root = (-half_b - discriminant_squared) / a;
+    if root < t_min || t_max < root {
+      root = (-half_b + discriminant_squared) / a;
+
+      if root < t_min || t_max < root {
+        return false;
+      }
+    }
+
+    hit_record.t = root;
+    hit_record.p = ray.point_at_parameter(hit_record.t);
+    hit_record.normal = (hit_record.p - &self.center) / self.radius;
+
+    return true;
   }
 }
 

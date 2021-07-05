@@ -11,6 +11,7 @@ mod sphere;
 mod scene;
 mod image;
 mod hittable;
+mod hitRecord;
 
 const FILENAME: &str = "rendered_output.ppm";
 

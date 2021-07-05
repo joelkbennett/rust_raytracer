@@ -28,6 +28,10 @@ impl Point {
             z: self.x * other.y - self.y * other.x
         }
     }
+
+    pub fn flip(&self) -> Point {
+        *self * -1.0
+    }
 }
 
 impl ops::Add<&Point> for Point {
